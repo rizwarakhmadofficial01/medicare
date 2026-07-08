@@ -5,7 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-const DB_PATH = path.join(__dirname, '..', 'data', 'medicare.sqlite');
+const DATA_DIR = path.join(__dirname, '..', 'data');
+const DB_PATH = path.join(DATA_DIR, 'medicare.sqlite');
 
 let SQL = null;
 let db = null;
@@ -17,6 +18,9 @@ function persist() {
 }
 
 async function init() {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
   SQL = await initSqlJs({});
   if (fs.existsSync(DB_PATH)) {
     const filebuffer = fs.readFileSync(DB_PATH);
