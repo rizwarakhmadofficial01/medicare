@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+<div class="page-title">Daftar Pasien</div>
+<div class="page-subtitle">Seluruh akun yang terdaftar di MediCare.</div>
+
+<table>
+  <thead><tr><th>Nama</th><th>Email</th><th>Role</th><th>Terdaftar</th></tr></thead>
+  <tbody>
+    <% users.forEach(u => { %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.email %></td>
+        <td><span class="badge <%= u.role === 'admin' ? 'badge-confirmed' : 'badge-completed' %>"><%= u.role === 'admin' ? 'admin' : 'pasien' %></span></td>
+        <td><%= u.created_at %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('../partials/footer') %>

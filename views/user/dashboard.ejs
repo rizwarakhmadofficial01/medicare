@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+
+<div class="page-title">Halo, <%= currentUser.name %> 👋</div>
+<div class="page-subtitle">Selamat datang kembali di MediCare.</div>
+
+<div class="grid grid-3" style="margin-bottom: 26px;">
+  <div class="card stat-card">
+    <div class="stat-label">Total Janji Temu Saya</div>
+    <div class="stat-value"><%= totalAppointments %></div>
+  </div>
+  <div class="card stat-card">
+    <div class="stat-label">Dokter Tersedia</div>
+    <div class="stat-value"><%= activeDoctorsCount %></div>
+  </div>
+  <div class="card" style="display:flex; align-items:center; justify-content:center;">
+    <a href="/user/doctors" class="btn btn-primary btn-block">+ Buat Janji Temu Baru</a>
+  </div>
+</div>
+
+<div class="section-header">
+  <h3 style="margin:0;">Janji Temu Terbaru Saya</h3>
+  <a href="/user/appointments" class="btn btn-outline btn-sm">Lihat Semua →</a>
+</div>
+
+<% if (myAppointments.length === 0) { %>
+  <div class="card empty-state">Kamu belum pernah membuat janji temu. <a href="/user/doctors" style="color:#0d9488;font-weight:600;">Buat sekarang →</a></div>
+<% } else { %>
+  <table>
+    <thead><tr><th>Dokter</th><th>Tanggal</th><th>Jam</th><th>Total</th><th>Status</th></tr></thead>
+    <tbody>
+      <% myAppointments.forEach(a => { %>
+        <tr>
+          <td><%= a.doctor_name %> <small style="color:#94a3b8;">(<%= a.category %>)</small></td>
+          <td><%= a.booking_date %></td>
+          <td><%= a.start_time %> - <%= a.end_time %></td>
+          <td>Rp <%= a.total_price.toLocaleString('id-ID') %></td>
+          <td><span class="badge badge-<%= a.status %>"><%= a.status %></span></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include('../partials/footer') %>

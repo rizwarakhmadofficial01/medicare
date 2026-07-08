@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="section-header">
+  <div>
+    <div class="page-title">Kelola Dokter</div>
+    <div class="page-subtitle" style="margin-bottom:0;">Tambah, ubah, atau hapus data dokter klinik.</div>
+  </div>
+  <a href="/admin/doctors/new" class="btn btn-primary">+ Tambah Dokter</a>
+</div>
+
+<% if (doctors.length === 0) { %>
+  <div class="card empty-state">Belum ada data dokter.</div>
+<% } else { %>
+  <table>
+    <thead>
+      <tr><th>Nama</th><th>Spesialisasi</th><th>Biaya Konsultasi</th><th>Status</th><th>Aksi</th></tr>
+    </thead>
+    <tbody>
+      <% doctors.forEach(d => { %>
+        <tr>
+          <td><%= d.name %></td>
+          <td><%= d.category %></td>
+          <td>Rp <%= d.price_per_hour.toLocaleString('id-ID') %></td>
+          <td>
+            <% if (d.is_active) { %>
+              <span class="badge badge-completed">Aktif</span>
+            <% } else { %>
+              <span class="badge badge-cancelled">Nonaktif</span>
+            <% } %>
+          </td>
+          <td style="display:flex; gap:6px;">
+            <a href="/admin/doctors/<%= d.id %>/edit" class="btn btn-outline btn-sm">Edit</a>
+            <form action="/admin/doctors/<%= d.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Hapus dokter ini?');">
+              <button class="btn btn-danger btn-sm" type="submit">Hapus</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include('../partials/footer') %>

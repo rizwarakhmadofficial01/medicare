@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - MediCare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h1>🩺 MediCare</h1>
+      <p class="sub">Masuk untuk membuat janji temu dengan dokter pilihanmu.</p>
+
+      <% if (successMsg && successMsg.length) { %><div class="alert alert-success"><%= successMsg[0] %></div><% } %>
+      <% if (errorMsg && errorMsg.length) { %><div class="alert alert-error"><%= errorMsg[0] %></div><% } %>
+
+      <form action="/login" method="POST">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="nama@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="••••••••" required>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Login</button>
+      </form>
+
+      <div class="switch">Belum punya akun? <a href="/register">Daftar di sini</a></div>
+
+      <div class="demo-creds">
+        <b>Demo Akun</b><br>
+        Admin: admin@medicare.test / admin123<br>
+        Pasien: user@medicare.test / user123
+      </div>
+    </div>
+  </div>
+</body>
+</html>

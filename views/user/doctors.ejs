@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<div class="page-title">Daftar Dokter</div>
+<div class="page-subtitle">Pilih dokter dan jadwalkan janji temumu.</div>
+
+<div class="filters">
+  <a href="/user/doctors" class="<%= category === '' ? 'active' : '' %>">Semua</a>
+  <% categories.forEach(c => { %>
+    <a href="/user/doctors?category=<%= c.category %>" class="<%= category === c.category ? 'active' : '' %>"><%= c.category %></a>
+  <% }) %>
+</div>
+
+<% if (doctors.length === 0) { %>
+  <div class="card empty-state">Tidak ada dokter pada spesialisasi ini.</div>
+<% } else { %>
+  <div class="grid grid-3">
+    <% doctors.forEach(d => { %>
+      <div class="card field-card">
+        <div class="field-img">🩺 <%= d.category %></div>
+        <span class="field-cat"><%= d.category %></span>
+        <div class="field-name"><%= d.name %></div>
+        <div class="field-desc"><%= d.description %></div>
+        <div class="field-price">Rp <%= d.price_per_hour.toLocaleString('id-ID') %> / sesi</div>
+        <a href="/user/doctors/<%= d.id %>/book" class="btn btn-primary btn-block">Buat Janji Temu</a>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

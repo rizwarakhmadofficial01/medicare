@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+
+<div class="page-title">Janji Temu: <%= doctor.name %></div>
+<div class="page-subtitle"><%= doctor.category %> · Rp <%= doctor.price_per_hour.toLocaleString('id-ID') %> / sesi</div>
+
+<div class="card" style="max-width: 560px;">
+  <form action="/user/doctors/<%= doctor.id %>/book" method="POST">
+    <div class="form-group">
+      <label>Tanggal Janji Temu</label>
+      <input type="date" name="booking_date" required>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Jam Mulai</label>
+        <input type="time" name="start_time" required>
+      </div>
+      <div class="form-group">
+        <label>Jam Selesai</label>
+        <input type="time" name="end_time" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Keluhan / Catatan (opsional)</label>
+      <textarea name="notes" rows="2" placeholder="Contoh: demam sejak 2 hari, mohon dibawakan hasil lab sebelumnya"></textarea>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-primary" type="submit">Konfirmasi Janji Temu</button>
+      <a href="/user/doctors" class="btn btn-outline">Batal</a>
+    </div>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

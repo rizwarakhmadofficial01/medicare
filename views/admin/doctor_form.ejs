@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<div class="page-title"><%= title %></div>
+<div class="page-subtitle">Isi detail dokter di bawah ini.</div>
+
+<div class="card" style="max-width: 560px;">
+  <form action="<%= doctor ? '/admin/doctors/' + doctor.id + '?_method=PUT' : '/admin/doctors' %>" method="POST">
+    <div class="form-group">
+      <label>Nama Dokter</label>
+      <input type="text" name="name" value="<%= doctor ? doctor.name : '' %>" placeholder="dr. Nama Lengkap, Sp.XX" required>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Spesialisasi</label>
+        <select name="category" required>
+          <% ['Umum','Gigi','Anak','Penyakit Dalam','Kandungan','THT','Mata','Kulit & Kelamin','Jantung','Saraf'].forEach(c => { %>
+            <option value="<%= c %>" <%= doctor && doctor.category === c ? 'selected' : '' %>><%= c %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Biaya Konsultasi (Rp)</label>
+        <input type="number" name="price_per_hour" value="<%= doctor ? doctor.price_per_hour : '' %>" min="0" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Deskripsi</label>
+      <textarea name="description" rows="3"><%= doctor ? doctor.description : '' %></textarea>
+    </div>
+    <div class="form-group">
+      <label>URL Foto (opsional)</label>
+      <input type="text" name="image_url" value="<%= doctor ? doctor.image_url : '' %>" placeholder="/images/doctor.jpg">
+    </div>
+    <% if (doctor) { %>
+      <div class="form-group">
+        <label><input type="checkbox" name="is_active" value="1" <%= doctor.is_active ? 'checked' : '' %> style="width:auto; margin-right:6px;">Dokter Aktif (dapat menerima janji temu)</label>
+      </div>
+    <% } %>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-primary" type="submit">Simpan</button>
+      <a href="/admin/doctors" class="btn btn-outline">Batal</a>
+    </div>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

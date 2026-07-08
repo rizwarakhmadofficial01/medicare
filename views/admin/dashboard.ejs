@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+
+<div class="page-title">Dashboard Admin</div>
+<div class="page-subtitle">Ringkasan aktivitas klinik MediCare hari ini.</div>
+
+<div class="grid grid-4" style="margin-bottom: 26px;">
+  <div class="card stat-card">
+    <div class="stat-label">Total Dokter</div>
+    <div class="stat-value"><%= totalDoctors %></div>
+  </div>
+  <div class="card stat-card">
+    <div class="stat-label">Total Pasien</div>
+    <div class="stat-value"><%= totalPatients %></div>
+  </div>
+  <div class="card stat-card">
+    <div class="stat-label">Janji Temu Pending</div>
+    <div class="stat-value" style="color:#d97706;"><%= pendingAppointments %></div>
+  </div>
+  <div class="card stat-card">
+    <div class="stat-label">Total Pendapatan</div>
+    <div class="stat-value" style="color:#0d9488;">Rp <%= totalRevenue.toLocaleString('id-ID') %></div>
+  </div>
+</div>
+
+<div class="section-header">
+  <h3 style="margin:0;">Janji Temu Terbaru</h3>
+  <a href="/admin/appointments" class="btn btn-outline btn-sm">Lihat Semua →</a>
+</div>
+
+<% if (recentAppointments.length === 0) { %>
+  <div class="card empty-state">Belum ada janji temu.</div>
+<% } else { %>
+  <table>
+    <thead>
+      <tr><th>Pasien</th><th>Dokter</th><th>Tanggal</th><th>Jam</th><th>Total</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <% recentAppointments.forEach(a => { %>
+        <tr>
+          <td><%= a.user_name %></td>
+          <td><%= a.doctor_name %></td>
+          <td><%= a.booking_date %></td>
+          <td><%= a.start_time %> - <%= a.end_time %></td>
+          <td>Rp <%= a.total_price.toLocaleString('id-ID') %></td>
+          <td><span class="badge badge-<%= a.status %>"><%= a.status %></span></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include('../partials/footer') %>
